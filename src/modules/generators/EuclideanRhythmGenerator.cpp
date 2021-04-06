@@ -25,6 +25,12 @@ void EuclideanRhythmGenerator::setOffset(uint8_t offset) {
 
 void EuclideanRhythmGenerator::generate() {
     Serial.println("EuclideanRhythmGenerator::generate");
+    Serial.print(length);
+    Serial.print(" ");
+    Serial.print(density);
+    Serial.print(" ");
+    Serial.print(offset);
+    Serial.println();
     rhythm.setLength(length);
 
     int bucket = 0;

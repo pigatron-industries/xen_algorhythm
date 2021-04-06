@@ -39,7 +39,6 @@ void MainController::execute() {
     }
 
     if(update) {
-        // Serial.println(euclideanRhythmControllers[0].getOutput());
         for(int channel = 0; channel < CHANNELS; channel++) {
             gateOutputs.setValue(channel, euclideanRhythmControllers[channel].getOutput());
             gateOutputs.setValue(channel+4, euclideanRhythmControllers[channel].getOutput());

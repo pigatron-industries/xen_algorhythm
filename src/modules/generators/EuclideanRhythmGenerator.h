@@ -10,6 +10,8 @@ class EuclideanRhythmGenerator : public RhythmGenerator {
         void setLength(uint8_t length);
         void setDensity(uint8_t density);
         void setOffset(uint8_t offset);
+
+        uint8_t getLength() { return length; }
         bool getOutput() { return rhythm.getOutput(); }
 
     private:
