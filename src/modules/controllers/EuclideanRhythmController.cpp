@@ -12,7 +12,7 @@ void EuclideanRhythmController::update() {
         generator.setLength(lengthInput.getValue());
     }
     if(densityInput.update()) {
-        uint8_t density = generator.getLength() * densityInput.getValue();
+        uint8_t density = (generator.getLength()+1) * densityInput.getValue();
         generator.setDensity(density);
     }
     if(offsetInput.update()) {

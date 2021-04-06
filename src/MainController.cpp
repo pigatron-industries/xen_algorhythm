@@ -21,20 +21,16 @@ void MainController::execute() {
                 euclideanRhythmControllers[channel].clock();
             }
         } else if (clockInput.fell()) {
-            // turn off all outputs
-            for(int channel = 0; channel < CHANNELS+4; channel++) {
-                gateOutputs.setValue(channel, false);
-            }
-            gateOutputs.sendData();
+            clearOutputs();
         }
     }
 
     if(resetInput.update()) {
         if(resetInput.rose()) {
-            update = true;
             for(int channel = 0; channel < CHANNELS; channel++) {
                 euclideanRhythmControllers[channel].reset();
             }
+            clearOutputs();
         }
     }
 
@@ -45,4 +41,11 @@ void MainController::execute() {
         }
         gateOutputs.sendData();
     }
+}
+
+void MainController::clearOutputs() {
+    for(int channel = 0; channel < CHANNELS+4; channel++) {
+        gateOutputs.setValue(channel, false);
+    }
+    gateOutputs.sendData();
 }

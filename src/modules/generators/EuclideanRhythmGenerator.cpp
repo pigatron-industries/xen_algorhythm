@@ -34,7 +34,7 @@ void EuclideanRhythmGenerator::generate() {
     rhythm.setLength(length);
 
     int bucket = 0;
-    for(int i = 0; i < length; i++) {
+    for(int i = length-1; i >= 0; i--) {
         bucket += density;
         if(bucket >= length) {
             bucket -= length;

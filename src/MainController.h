@@ -25,6 +25,8 @@ class MainController {
             EuclideanRhythmController(A1, A5, A9),
             EuclideanRhythmController(A0, A4, A8)
         };
+
+        void clearOutputs();
 };
 
 #endif

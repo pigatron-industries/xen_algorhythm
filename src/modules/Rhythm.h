@@ -11,7 +11,7 @@ class Rhythm {
         void setLength(uint8_t length) { this->length = length; }
         void setPulse(uint8_t index, bool pulse) { this->rhythm[index] = pulse; }
 
-        void reset() { position = -1; clock(); }
+        void reset() { position = -1; }
         void clock();
         bool getOutput() { return rhythm[position]; }
         bool getStart() { return position == 0; }
