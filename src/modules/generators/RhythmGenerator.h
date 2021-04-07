@@ -11,8 +11,8 @@ class RhythmGenerator {
 
         void reset() { rhythm.reset(); }
         void clock() { rhythm.clock(); }
-        bool getPulse() { return rhythm.getOutput(); }
-        bool getStart() { return rhythm.getStart(); }
+        bool getOutput() { return rhythm.getOutput(); }
+        uint8_t getPosition() { return rhythm.getPosition(); }
 
     protected:
         Rhythm rhythm;

@@ -12,6 +12,8 @@ class EuclideanRhythmController {
         void clock();
         void reset();
         bool getOutput() { return generator.getOutput(); }
+        uint8_t getPosition() { return generator.getPosition(); }
+        void debug();
 
     private:
         LinearInput lengthInput;

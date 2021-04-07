@@ -10,11 +10,20 @@
 
 class MainController {
     public:
+
+        enum Mode {
+            ASYNC_REPEAT,
+            SYNC_REPEAT,
+            SYNC_SINGLE
+        };
+
         MainController();
         void init();
         void execute();
 
     private:
+        CycleEnum<Mode> mode = CycleEnum<Mode>(ASYNC_REPEAT, SYNC_SINGLE);
+
         RotaryEncoder encoder = RotaryEncoder(ENCODER_PIN1, ENCODER_PIN2);
         PushButton encoderButton = PushButton(ENCODER_BTN_PIN);
         GateInput resetInput = GateInput(RESET_PIN);
@@ -28,7 +37,13 @@ class MainController {
             EuclideanRhythmController(A0, A4, A8)
         };
 
-        void clearOutputs();
+        void clock();
+        void reset();
+        void clear();
+        void modeUpdate();
+
+        void debugReset();
+        void debugClock();
 };
 
 #endif

@@ -1,40 +1,56 @@
 #include "EuclideanRhythmGenerator.h"
 
-void EuclideanRhythmGenerator::setLength(uint8_t length) {
+bool EuclideanRhythmGenerator::setLength(uint8_t length) {
     if(this->length != length) {
         this->length = length;
         generate();
+        return true;
     }
+    return false;
 }
 
-void EuclideanRhythmGenerator::setDensity(uint8_t density) {
+bool EuclideanRhythmGenerator::setDensity(uint8_t density) {
     if(this->density != density) {
         this->density = density;
         generate();
+        return true;
     }
+    return false;
 }
 
-void EuclideanRhythmGenerator::setOffset(uint8_t offset) {
+bool EuclideanRhythmGenerator::setOffset(uint8_t offset) {
     if(this->offset != offset) {
         this->offset = offset;
         generate();
+        return true;
     }
+    return false;
+}
+
+bool EuclideanRhythmGenerator::setMode(Mode mode) {
+    if(this->mode != mode) {
+        this->mode = mode;
+        generate();
+        return true;
+    }
+    return false;
 }
 
 #include <Arduino.h>
 
 void EuclideanRhythmGenerator::generate() {
-    Serial.println("EuclideanRhythmGenerator::generate");
-    Serial.print(length);
-    Serial.print(" ");
-    Serial.print(density);
-    Serial.print(" ");
-    Serial.print(offset);
-    Serial.println();
-    rhythm.setLength(length);
+    if(mode == Mode::FRAME_NONE) {
+        frameLength = length;
+        frameStart = 0;
+    }
 
+    rhythm.setLength(frameLength);
+    rhythm.clear();
+
+    uint8_t frameStop = frameStart + length - 1;
+    
     int bucket = 0;
-    for(int i = length-1; i >= 0; i--) {
+    for(int i = frameStop; i >= frameStart; i--) {
         bucket += density;
         if(bucket >= length) {
             bucket -= length;
@@ -43,11 +59,6 @@ void EuclideanRhythmGenerator::generate() {
             rhythm.setPulse(applyOffset(i), false);
         }
     }
-
-    for(int i = 0; i < length; i++) {
-        Serial.print(rhythm.getBeat(i));
-    }
-    Serial.println();
 }
 
 int EuclideanRhythmGenerator::applyOffset(int beat) {
