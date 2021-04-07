@@ -25,8 +25,8 @@ void MainController::execute() {
         }
     }
 
-    if(resetInput.update()) {
-        if(resetInput.rose()) {
+    if(resetInput.update() || encoderButton.update()) {
+        if(resetInput.rose() || encoderButton.pressed()) {
             for(int channel = 0; channel < CHANNELS; channel++) {
                 euclideanRhythmControllers[channel].reset();
             }

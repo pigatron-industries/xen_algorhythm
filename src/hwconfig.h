@@ -2,7 +2,7 @@
 // Teensy Pins
 #define ENCODER_PIN1 7
 #define ENCODER_PIN2 8
-#define ENCODER_BTN 9
+#define ENCODER_BTN_PIN 9
 
 #define RESET_PIN 2
 #define CLOCK_PIN 3

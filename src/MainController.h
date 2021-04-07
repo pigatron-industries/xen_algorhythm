@@ -15,6 +15,8 @@ class MainController {
         void execute();
 
     private:
+        RotaryEncoder encoder = RotaryEncoder(ENCODER_PIN1, ENCODER_PIN2);
+        PushButton encoderButton = PushButton(ENCODER_BTN_PIN);
         GateInput resetInput = GateInput(RESET_PIN);
         GateInput clockInput = GateInput(CLOCK_PIN);
         MultiplexGateOutput gateOutputs = MultiplexGateOutput(OUT_DATA_PIN, OUT_LATCH_PIN, OUT_CLOCK_PIN, OUTPUTS);
