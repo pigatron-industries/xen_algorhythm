@@ -5,9 +5,9 @@
 #include <inttypes.h>
 #include "../../generators/EuclideanRhythmGenerator.h"
 
-class EuclideanRhythmController {
+class EuclideanChannel {
     public:
-        EuclideanRhythmController(uint8_t lengthPin, uint8_t densityPin, uint8_t offsetPin);
+        EuclideanChannel(uint8_t lengthPin, uint8_t densityPin, uint8_t offsetPin);
         void update();
         void clock();
         void reset();

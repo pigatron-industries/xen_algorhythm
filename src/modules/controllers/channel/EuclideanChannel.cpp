@@ -1,12 +1,12 @@
-#include "EuclideanChannelController.h"
+#include "EuclideanChannel.h"
 
-EuclideanRhythmController::EuclideanRhythmController(uint8_t lengthPin, uint8_t offsetPin, uint8_t densityPin) : 
+EuclideanChannel::EuclideanChannel(uint8_t lengthPin, uint8_t offsetPin, uint8_t densityPin) : 
     lengthInput(lengthPin, -5, 5, 1, 17),
     densityInput(densityPin, -5, 5, 0, 1),
     offsetInput(offsetPin, -5, 5, 0, 1) {
 }
 
-void EuclideanRhythmController::update() {
+void EuclideanChannel::update() {
     if(lengthInput.update()) {
         if(generator.setLength(lengthInput.getValue())) {
             debug();
@@ -26,15 +26,15 @@ void EuclideanRhythmController::update() {
     }
 }
 
-void EuclideanRhythmController::clock() {
+void EuclideanChannel::clock() {
     generator.clock();
 }
 
-void EuclideanRhythmController::reset() {
+void EuclideanChannel::reset() {
     generator.reset();
 }
 
-void EuclideanRhythmController::debug() {
+void EuclideanChannel::debug() {
     Serial.print(generator.getLength());
     Serial.print(" ");
     Serial.print(generator.getDensity());

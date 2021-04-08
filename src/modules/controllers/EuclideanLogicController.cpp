@@ -5,10 +5,10 @@ void EuclideanLogicController::init() {
 
 void EuclideanLogicController::execute() {
     for(int channel = 0; channel < CHANNELS; channel++) {
-        euclideanRhythmControllers[channel].update();
+        euclideanChannels[channel].update();
 
         if(mode == EuclideanRhythmGenerator::Mode::FRAME_SINGLE) {
-            euclideanRhythmControllers[channel].setFrameLength(euclideanRhythmControllers[0].getLength());
+            euclideanChannels[channel].setFrameLength(euclideanChannels[0].getLength());
         }
     }
 }
@@ -16,18 +16,18 @@ void EuclideanLogicController::execute() {
 void EuclideanLogicController::setMode(EuclideanRhythmGenerator::Mode mode) {
     this->mode = mode;
     for(int channel = 0; channel < CHANNELS; channel++) {
-        euclideanRhythmControllers[channel].setMode(mode);
+        euclideanChannels[channel].setMode(mode);
     }
 }
 
 void EuclideanLogicController::clock() {
     for(int channel = 0; channel < CHANNELS; channel++) {
-        euclideanRhythmControllers[channel].clock();
+        euclideanChannels[channel].clock();
     }
 
     for(int channel = 0; channel < CHANNELS; channel++) {
-        gateOutputs.setValue(channel, euclideanRhythmControllers[channel].getOutput());
-        gateOutputs.setValue(channel+4, euclideanRhythmControllers[channel].getOutput());
+        gateOutputs.setValue(channel, euclideanChannels[channel].getOutput());
+        gateOutputs.setValue(channel+4, euclideanChannels[channel].getOutput());
     }
     gateOutputs.sendData();
 
@@ -36,7 +36,7 @@ void EuclideanLogicController::clock() {
 
 void EuclideanLogicController::reset() {
     for(int channel = 0; channel < CHANNELS; channel++) {
-        euclideanRhythmControllers[channel].reset();
+        euclideanChannels[channel].reset();
     }
     clear();
     debugReset();
@@ -53,7 +53,7 @@ void EuclideanLogicController::debugReset() {
     Serial.print("Mode: ");
     Serial.println(mode);
     for(int channel = 0; channel < CHANNELS; channel++) {
-        euclideanRhythmControllers[channel].debug();
+        euclideanChannels[channel].debug();
     }
 }
 

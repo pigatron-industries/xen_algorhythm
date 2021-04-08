@@ -3,7 +3,7 @@
 
 #include <eurorack.h>
 #include "AbstractController.h"
-#include "channel/EuclideanChannelController.h"
+#include "channel/EuclideanChannel.h"
 
 class EuclideanLogicController : public AbstractController {
     public:
@@ -16,11 +16,11 @@ class EuclideanLogicController : public AbstractController {
         void setMode(EuclideanRhythmGenerator::Mode mode);
 
     private:
-        EuclideanRhythmController euclideanRhythmControllers[CHANNELS] = {
-            EuclideanRhythmController(A3, A7, A11),
-            EuclideanRhythmController(A2, A6, A10),
-            EuclideanRhythmController(A1, A5, A9),
-            EuclideanRhythmController(A0, A4, A8)
+        EuclideanChannel euclideanChannels[4] = {
+            EuclideanChannel(A3, A7, A11),
+            EuclideanChannel(A2, A6, A10),
+            EuclideanChannel(A1, A5, A9),
+            EuclideanChannel(A0, A4, A8)
         };
 
         EuclideanRhythmGenerator::Mode mode;
