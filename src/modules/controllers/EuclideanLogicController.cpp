@@ -27,7 +27,7 @@ void EuclideanLogicController::clock() {
 
     for(int channel = 0; channel < CHANNELS; channel++) {
         gateOutputs.setValue(channel, euclideanChannels[channel].getOutput());
-        gateOutputs.setValue(channel+4, euclideanChannels[channel].getOutput());
+        gateOutputs.setValue(channel+4, logicGates[channel].getOutput());
     }
     gateOutputs.sendData();
 

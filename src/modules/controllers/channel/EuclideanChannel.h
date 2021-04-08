@@ -15,6 +15,7 @@ class EuclideanChannel {
         bool getOutput() { return generator.getOutput(); }
         uint8_t getPosition() { return generator.getPosition(); }
         uint8_t getLength() { return generator.getLength(); }
+        Rhythm* getRhythm() { return generator.getRhythm(); }
 
         void setMode(EuclideanRhythmGenerator::Mode mode) { generator.setMode(mode); };
         void setFrameLength(uint8_t frameLength) { generator.setFrameLength(frameLength); };
