@@ -29,6 +29,9 @@ class EuclideanChannel {
 
         EuclideanRhythmGenerator generator;
 
+        void updateDensity();
+        void updateOffset();
+
 };
 
 #endif

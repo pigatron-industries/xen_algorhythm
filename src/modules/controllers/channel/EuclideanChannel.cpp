@@ -9,20 +9,30 @@ EuclideanChannel::EuclideanChannel(uint8_t lengthPin, uint8_t offsetPin, uint8_t
 void EuclideanChannel::update() {
     if(lengthInput.update()) {
         if(generator.setLength(lengthInput.getValue())) {
+            updateDensity();
+            updateOffset();
             debug();
         }
     }
     if(densityInput.update()) {
-        uint8_t density = (generator.getLength()+1) * densityInput.getValue();
-        if(generator.setDensity(density)) {
-            debug();
-        }
+        updateDensity();
     }
     if(offsetInput.update()) {
-        uint8_t offset = generator.getFrameLength() * offsetInput.getValue();
-        if(generator.setOffset(offset)) {
-            debug();
-        }
+        updateOffset();
+    }
+}
+
+void EuclideanChannel::updateDensity() {
+    uint8_t density = (generator.getLength()+1) * densityInput.getValue();
+    if(generator.setDensity(density)) {
+        debug();
+    }
+}
+
+void EuclideanChannel::updateOffset() {
+    uint8_t offset = generator.getFrameLength() * offsetInput.getValue();
+    if(generator.setOffset(offset)) {
+        debug();
     }
 }
 

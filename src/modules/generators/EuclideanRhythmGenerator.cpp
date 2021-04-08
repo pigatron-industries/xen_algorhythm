@@ -30,7 +30,6 @@ bool EuclideanRhythmGenerator::setOffset(uint8_t offset) {
 
 bool EuclideanRhythmGenerator::setFrameLength(uint8_t frameLength) {
     if(mode != Mode::FRAME_NONE && this->frameLength != frameLength) {
-        Serial.println(frameLength);
         this->frameLength = frameLength;
         generate();
         return true;
