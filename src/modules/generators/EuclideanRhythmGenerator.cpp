@@ -1,4 +1,5 @@
 #include "EuclideanRhythmGenerator.h"
+#include <Arduino.h>
 
 bool EuclideanRhythmGenerator::setLength(uint8_t length) {
     if(this->length != length) {
@@ -27,6 +28,16 @@ bool EuclideanRhythmGenerator::setOffset(uint8_t offset) {
     return false;
 }
 
+bool EuclideanRhythmGenerator::setFrameLength(uint8_t frameLength) {
+    if(mode != Mode::FRAME_NONE && this->frameLength != frameLength) {
+        Serial.println(frameLength);
+        this->frameLength = frameLength;
+        generate();
+        return true;
+    }
+    return false;
+}
+
 bool EuclideanRhythmGenerator::setMode(Mode mode) {
     if(this->mode != mode) {
         this->mode = mode;
@@ -36,18 +47,15 @@ bool EuclideanRhythmGenerator::setMode(Mode mode) {
     return false;
 }
 
-#include <Arduino.h>
-
 void EuclideanRhythmGenerator::generate() {
+    uint8_t frameStart = 0;
     if(mode == Mode::FRAME_NONE) {
         frameLength = length;
-        frameStart = 0;
     }
+    uint8_t frameStop = frameStart + length - 1;
 
     rhythm.setLength(frameLength);
     rhythm.clear();
-
-    uint8_t frameStop = frameStart + length - 1;
     
     int bucket = 0;
     for(int i = frameStop; i >= frameStart; i--) {
@@ -62,5 +70,5 @@ void EuclideanRhythmGenerator::generate() {
 }
 
 int EuclideanRhythmGenerator::applyOffset(int beat) {
-    return (beat + offset) % length;
+    return (beat + offset) % frameLength;
 }

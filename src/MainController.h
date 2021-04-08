@@ -13,7 +13,6 @@ class MainController {
 
         enum Mode {
             ASYNC_REPEAT,
-            SYNC_REPEAT,
             SYNC_SINGLE
         };
 

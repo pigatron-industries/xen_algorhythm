@@ -20,7 +20,7 @@ void EuclideanRhythmController::update() {
         }
     }
     if(offsetInput.update()) {
-        uint8_t offset = generator.getLength() * offsetInput.getValue();
+        uint8_t offset = generator.getFrameLength() * offsetInput.getValue();
         if(generator.setOffset(offset)) {
             debug();
         }
@@ -43,7 +43,7 @@ void EuclideanRhythmController::debug() {
     Serial.print(generator.getOffset());
     Serial.println();
 
-    for(int i = 0; i < generator.getLength(); i++) {
+    for(int i = 0; i < generator.getFrameLength(); i++) {
         Serial.print(generator.getRhythm().getBeat(i));
     }
     Serial.println();

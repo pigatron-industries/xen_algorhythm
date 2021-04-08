@@ -10,6 +10,10 @@ void MainController::init() {
 void MainController::execute() {
     for(int channel = 0; channel < CHANNELS; channel++) {
         euclideanRhythmControllers[channel].update();
+
+        if(mode.value == Mode::SYNC_SINGLE) {
+            euclideanRhythmControllers[channel].setFrameLength(euclideanRhythmControllers[0].getLength());
+        }
     }
 
     if(encoder.update()) {
@@ -35,7 +39,6 @@ void MainController::execute() {
 }
 
 void MainController::clock() {
-    uint8_t finished = 0;
     for(int channel = 0; channel < CHANNELS; channel++) {
         euclideanRhythmControllers[channel].clock();
     }
@@ -64,10 +67,14 @@ void MainController::clear() {
 void MainController::modeUpdate() {
     switch(mode.value) {
         case Mode::ASYNC_REPEAT:
-            break;
-        case Mode::SYNC_REPEAT:
+            for(int channel = 0; channel < CHANNELS; channel++) {
+                euclideanRhythmControllers[channel].setMode(EuclideanRhythmGenerator::Mode::FRAME_NONE);
+            }
             break;
         case Mode::SYNC_SINGLE:
+            for(int channel = 0; channel < CHANNELS; channel++) {
+                euclideanRhythmControllers[channel].setMode(EuclideanRhythmGenerator::Mode::FRAME_SINGLE);
+            }
             break;
     }
 }
