@@ -3,7 +3,7 @@
 
 #include <eurorack.h>
 #include <inttypes.h>
-#include "../generators/EuclideanRhythmGenerator.h"
+#include "../../generators/EuclideanRhythmGenerator.h"
 
 class EuclideanRhythmController {
     public:

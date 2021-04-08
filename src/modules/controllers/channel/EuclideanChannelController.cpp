@@ -1,10 +1,9 @@
-#include "EuclideanRhythmController.h"
+#include "EuclideanChannelController.h"
 
 EuclideanRhythmController::EuclideanRhythmController(uint8_t lengthPin, uint8_t offsetPin, uint8_t densityPin) : 
     lengthInput(lengthPin, -5, 5, 1, 17),
     densityInput(densityPin, -5, 5, 0, 1),
     offsetInput(offsetPin, -5, 5, 0, 1) {
-
 }
 
 void EuclideanRhythmController::update() {
