@@ -15,18 +15,14 @@ void MainController::execute() {
         modeUpdate();
     }
 
-    if(resetInput.update() || encoderButton.update()) {
-        if(resetInput.rose() || encoderButton.pressed()) {
-            euclideanLogicController.reset();
-        }
+    if((encoderButton.update() && encoderButton.pressed()) || resetInput.didRise()) {
+        euclideanLogicController.reset();
     }
 
-    if(clockInput.update()) {
-        if(clockInput.rose()) {
-            euclideanLogicController.clock();
-        } else if (clockInput.fell()) {
-            euclideanLogicController.clear();
-        }
+    if(clockInput.didRise()) {
+        euclideanLogicController.clock();
+    } else if (clockInput.didFall()) {
+        euclideanLogicController.clear();
     }
 
     euclideanLogicController.execute();

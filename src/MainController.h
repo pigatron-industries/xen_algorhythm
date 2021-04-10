@@ -25,8 +25,8 @@ class MainController {
 
         RotaryEncoder encoder = RotaryEncoder(ENCODER_PIN1, ENCODER_PIN2);
         PushButton encoderButton = PushButton(ENCODER_BTN_PIN);
-        GateInput resetInput = GateInput(RESET_PIN);
-        GateInput clockInput = GateInput(CLOCK_PIN);
+        TriggerInput resetInput = TriggerInput(RESET_PIN);
+        TriggerInput clockInput = TriggerInput(CLOCK_PIN);
 
         EuclideanLogicController euclideanLogicController;
 
