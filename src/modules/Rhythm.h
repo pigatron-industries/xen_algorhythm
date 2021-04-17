@@ -9,15 +9,17 @@ class Rhythm {
     public:
         Rhythm() {}
         void setLength(uint8_t length) { this->length = length; }
-        void setPulse(uint8_t index, bool pulse) { this->rhythm[index] = pulse; }
+        void setBeat(uint8_t index, bool pulse) { this->rhythm[index] = pulse; }
         void clear();
+
+        uint8_t getLength() { return length; }
+        bool getBeat(int i) { return rhythm[i]; }
 
         void reset() { position = -1; finished = false; }
         void clock();
         bool getOutput() { return rhythm[position]; }
         uint8_t getPosition() { return position; }
         bool isFinished() { return finished; }
-        bool getBeat(int i) { return rhythm[i]; }
 
     private:
         uint8_t length = 8;

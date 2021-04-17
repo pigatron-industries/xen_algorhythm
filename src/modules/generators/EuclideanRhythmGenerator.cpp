@@ -29,7 +29,7 @@ bool EuclideanRhythmGenerator::setOffset(uint8_t offset) {
 }
 
 bool EuclideanRhythmGenerator::setFrameLength(uint8_t frameLength) {
-    if(mode != Mode::FRAME_NONE && this->frameLength != frameLength) {
+    if(frameMode != FrameMode::FRAME_NONE && this->frameLength != frameLength) {
         this->frameLength = frameLength;
         generate();
         return true;
@@ -37,9 +37,9 @@ bool EuclideanRhythmGenerator::setFrameLength(uint8_t frameLength) {
     return false;
 }
 
-bool EuclideanRhythmGenerator::setMode(Mode mode) {
-    if(this->mode != mode) {
-        this->mode = mode;
+bool EuclideanRhythmGenerator::setFrameMode(FrameMode frameMode) {
+    if(this->frameMode != frameMode) {
+        this->frameMode = frameMode;
         generate();
         return true;
     }
@@ -48,7 +48,7 @@ bool EuclideanRhythmGenerator::setMode(Mode mode) {
 
 void EuclideanRhythmGenerator::generate() {
     uint8_t frameStart = 0;
-    if(mode == Mode::FRAME_NONE) {
+    if(frameMode == FrameMode::FRAME_NONE) {
         frameLength = length;
     }
     uint8_t frameStop = frameStart + length - 1;
@@ -61,9 +61,9 @@ void EuclideanRhythmGenerator::generate() {
         bucket += density;
         if(bucket >= length) {
             bucket -= length;
-            rhythm.setPulse(applyOffset(i), true);
+            rhythm.setBeat(applyOffset(i), true);
         } else {
-            rhythm.setPulse(applyOffset(i), false);
+            rhythm.setBeat(applyOffset(i), false);
         }
     }
 }

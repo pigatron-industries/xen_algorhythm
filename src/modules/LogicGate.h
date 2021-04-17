@@ -11,13 +11,13 @@ class LogicGate {
             AND_NOT
         };
 
-        LogicGate(GateType type, Rhythm* input1, Rhythm* input2);
+        LogicGate(GateType type, Rhythm& rhythm1, Rhythm& rhythm2);
         bool getOutput();
 
     private:
         GateType type;
-        Rhythm* input1;
-        Rhythm* input2;
+        Rhythm& rhythm1;
+        Rhythm& rhythm2;
 
 };
 

@@ -4,33 +4,55 @@ void EuclideanLogicController::init() {
 }
 
 void EuclideanLogicController::execute() {
+    bool changed = false;
     for(int channel = 0; channel < CHANNELS; channel++) {
-        euclideanChannels[channel].update();
+        changed |= euclideanChannels[channel].update();
 
-        if(mode == EuclideanRhythmGenerator::Mode::FRAME_SINGLE) {
+        if(mode == Mode::SYNCHRONOUS) {
             euclideanChannels[channel].setFrameLength(euclideanChannels[0].getLength());
         }
     }
+
+    if(mode == Mode::DUAL_SEQUENTIAL) {
+        sequentialGenerator[0].update();
+        sequentialGenerator[1].update();
+    }
 }
 
-void EuclideanLogicController::setMode(EuclideanRhythmGenerator::Mode mode) {
+void EuclideanLogicController::setMode(Mode mode) {
     this->mode = mode;
     for(int channel = 0; channel < CHANNELS; channel++) {
-        euclideanChannels[channel].setMode(mode);
+        euclideanChannels[channel].setFrameMode(mode == Mode::SYNCHRONOUS ? EuclideanRhythmGenerator::FrameMode::FRAME_SINGLE : 
+                                                                            EuclideanRhythmGenerator::FrameMode::FRAME_NONE);
     }
 }
 
 void EuclideanLogicController::clock() {
-    for(int channel = 0; channel < CHANNELS; channel++) {
-        euclideanChannels[channel].clock();
+    switch(mode) {
+        case Mode::ASYNCHRONOUS:
+        case Mode::SYNCHRONOUS:
+            euclideanChannels[0].clock();
+            euclideanChannels[1].clock();
+            euclideanChannels[2].clock();
+            euclideanChannels[3].clock();
+            gateOutputs.setValue(0, euclideanChannels[0].getOutput());
+            gateOutputs.setValue(1, euclideanChannels[1].getOutput());
+            gateOutputs.setValue(2, euclideanChannels[2].getOutput());
+            gateOutputs.setValue(3, euclideanChannels[3].getOutput());
+            gateOutputs.setValue(4, logicGates[0].getOutput());
+            gateOutputs.setValue(5, logicGates[1].getOutput());
+            gateOutputs.setValue(6, logicGates[2].getOutput());
+            gateOutputs.setValue(7, logicGates[3].getOutput());
+            break;
+        case Mode::DUAL_SEQUENTIAL:
+            sequentialGenerator[0].clock();
+            sequentialGenerator[1].clock();
+            gateOutputs.setValue(0, sequentialGenerator[0].getOutput());
+            gateOutputs.setValue(2, sequentialGenerator[1].getOutput());
+            break;
     }
 
-    for(int channel = 0; channel < CHANNELS; channel++) {
-        gateOutputs.setValue(channel, euclideanChannels[channel].getOutput());
-        gateOutputs.setValue(channel+4, logicGates[channel].getOutput());
-    }
     gateOutputs.sendData();
-
     debugClock();
 }
 

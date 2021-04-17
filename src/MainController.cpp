@@ -30,11 +30,16 @@ void MainController::execute() {
 
 void MainController::modeUpdate() {
     switch(mode.value) {
-        case Mode::ASYNC_REPEAT:
-            euclideanLogicController.setMode(EuclideanRhythmGenerator::Mode::FRAME_NONE);
+        case Mode::ASYNCHRONOUS:
+            euclideanLogicController.setMode(EuclideanLogicController::Mode::ASYNCHRONOUS);
             break;
-        case Mode::SYNC_SINGLE:
-            euclideanLogicController.setMode(EuclideanRhythmGenerator::Mode::FRAME_SINGLE);
+        case Mode::SYNCHRONOUS:
+            euclideanLogicController.setMode(EuclideanLogicController::Mode::SYNCHRONOUS);
+            break;
+        case Mode::DUAL_SEQUENTIAL:
+            euclideanLogicController.setMode(EuclideanLogicController::Mode::DUAL_SEQUENTIAL);
+            break;
+        default:
             break;
     }
 }

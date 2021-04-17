@@ -7,7 +7,7 @@
 class RhythmGenerator {
     public:
         RhythmGenerator() {}
-        Rhythm* getRhythm() { return &rhythm; }
+        Rhythm& getRhythm() { return rhythm; }
 
         void reset() { rhythm.reset(); }
         void clock() { rhythm.clock(); }

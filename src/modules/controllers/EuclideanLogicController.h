@@ -4,17 +4,24 @@
 #include <eurorack.h>
 #include "AbstractController.h"
 #include "channel/EuclideanChannel.h"
+#include "../generators/SequentialGenerator.h"
 #include "../LogicGate.h"
 
 class EuclideanLogicController : public AbstractController {
     public:
+        enum Mode {
+            ASYNCHRONOUS,
+            SYNCHRONOUS,
+            DUAL_SEQUENTIAL
+        };
+
         virtual void init();
         virtual void execute();
         virtual void clock();
         virtual void reset();
         virtual void clear();
 
-        void setMode(EuclideanRhythmGenerator::Mode mode);
+        void setMode(Mode mode);
 
     private:
         EuclideanChannel euclideanChannels[4] = {
@@ -24,6 +31,11 @@ class EuclideanLogicController : public AbstractController {
             EuclideanChannel(A0, A4, A8)
         };
 
+        SequentialGenerator sequentialGenerator[2] = {
+            SequentialGenerator(euclideanChannels[0].getRhythm(), euclideanChannels[1].getRhythm()),
+            SequentialGenerator(euclideanChannels[2].getRhythm(), euclideanChannels[3].getRhythm()),
+        };
+
         LogicGate logicGates[4] = {
             LogicGate(LogicGate::GateType::AND, euclideanChannels[0].getRhythm(), euclideanChannels[3].getRhythm()),
             LogicGate(LogicGate::GateType::AND, euclideanChannels[1].getRhythm(), euclideanChannels[0].getRhythm()),
@@ -31,7 +43,7 @@ class EuclideanLogicController : public AbstractController {
             LogicGate(LogicGate::GateType::AND, euclideanChannels[3].getRhythm(), euclideanChannels[2].getRhythm())
         };
 
-        EuclideanRhythmGenerator::Mode mode;
+        Mode mode;
 
         void debugReset();
         void debugClock();

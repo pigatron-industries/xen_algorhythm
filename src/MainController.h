@@ -12,8 +12,9 @@ class MainController {
     public:
 
         enum Mode {
-            ASYNC_REPEAT,
-            SYNC_SINGLE
+            ASYNCHRONOUS,
+            SYNCHRONOUS,
+            DUAL_SEQUENTIAL
         };
 
         MainController();
@@ -21,7 +22,7 @@ class MainController {
         void execute();
 
     private:
-        CycleEnum<Mode> mode = CycleEnum<Mode>(ASYNC_REPEAT, SYNC_SINGLE);
+        CycleEnum<Mode> mode = CycleEnum<Mode>(ASYNCHRONOUS, DUAL_SEQUENTIAL);
 
         RotaryEncoder encoder = RotaryEncoder(ENCODER_PIN1, ENCODER_PIN2);
         PushButton encoderButton = PushButton(ENCODER_BTN_PIN);

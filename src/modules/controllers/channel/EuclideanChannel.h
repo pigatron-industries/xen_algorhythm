@@ -8,16 +8,16 @@
 class EuclideanChannel {
     public:
         EuclideanChannel(uint8_t lengthPin, uint8_t densityPin, uint8_t offsetPin);
-        void update();
+        bool update();
         void clock();
         void reset();
 
         bool getOutput() { return generator.getOutput(); }
         uint8_t getPosition() { return generator.getPosition(); }
         uint8_t getLength() { return generator.getLength(); }
-        Rhythm* getRhythm() { return generator.getRhythm(); }
+        Rhythm& getRhythm() { return generator.getRhythm(); }
 
-        void setMode(EuclideanRhythmGenerator::Mode mode) { generator.setMode(mode); };
+        void setFrameMode(EuclideanRhythmGenerator::FrameMode frameMode) { generator.setFrameMode(frameMode); };
         void setFrameLength(uint8_t frameLength) { generator.setFrameLength(frameLength); };
 
         void debug();
@@ -29,8 +29,8 @@ class EuclideanChannel {
 
         EuclideanRhythmGenerator generator;
 
-        void updateDensity();
-        void updateOffset();
+        bool updateDensity();
+        bool updateOffset();
 
 };
 

@@ -6,34 +6,43 @@ EuclideanChannel::EuclideanChannel(uint8_t lengthPin, uint8_t offsetPin, uint8_t
     offsetInput(offsetPin, -5, 5, 0, 1) {
 }
 
-void EuclideanChannel::update() {
+bool EuclideanChannel::update() {
+    bool change = false;
     if(lengthInput.update()) {
         if(generator.setLength(lengthInput.getValue())) {
             updateDensity();
             updateOffset();
+            change = true;
             debug();
         }
     }
     if(densityInput.update()) {
         updateDensity();
+        change = true;
     }
     if(offsetInput.update()) {
         updateOffset();
+        change = true;
     }
+    return change;
 }
 
-void EuclideanChannel::updateDensity() {
+bool EuclideanChannel::updateDensity() {
     uint8_t density = (generator.getLength()+1) * densityInput.getValue();
     if(generator.setDensity(density)) {
         debug();
+        return true;
     }
+    return false;
 }
 
-void EuclideanChannel::updateOffset() {
+bool EuclideanChannel::updateOffset() {
     uint8_t offset = generator.getFrameLength() * offsetInput.getValue();
     if(generator.setOffset(offset)) {
         debug();
+        return true;
     }
+    return false;
 }
 
 void EuclideanChannel::clock() {
@@ -53,7 +62,7 @@ void EuclideanChannel::debug() {
     Serial.println();
 
     for(int i = 0; i < generator.getFrameLength(); i++) {
-        Serial.print(generator.getRhythm()->getBeat(i));
+        Serial.print(generator.getRhythm().getBeat(i));
     }
     Serial.println();
 }

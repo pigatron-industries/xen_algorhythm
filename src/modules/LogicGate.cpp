@@ -1,17 +1,18 @@
 #include "LogicGate.h"
 
 
-LogicGate::LogicGate(GateType type, Rhythm* input1, Rhythm* input2) {
+LogicGate::LogicGate(GateType type, Rhythm& rhythm1, Rhythm& rhythm2) :
+    rhythm1(rhythm1),
+    rhythm2(rhythm2) {
     this->type = type;
-    this->input1 = input1;
-    this->input2 = input2;
 }
 
 bool LogicGate::getOutput() {
     switch(type) {
         case AND:
-            return input1->getOutput() && input2->getOutput();
+            return rhythm1.getOutput() && rhythm2.getOutput();
         case AND_NOT:
-            return input1->getOutput() && !input2->getOutput();
+            return rhythm1.getOutput() && !rhythm2.getOutput();
     }
+    return false;
 }
