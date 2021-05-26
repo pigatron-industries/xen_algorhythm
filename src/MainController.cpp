@@ -1,6 +1,7 @@
 #include "MainController.h"
 
 MainController::MainController() {
+    activeController = &euclideanLogicController;
 }
 
 void MainController::init() {
@@ -8,7 +9,7 @@ void MainController::init() {
 }
 
 void MainController::execute() {
-    euclideanLogicController.execute();
+    activeController->execute();
 
     if(encoder.update()) {
         mode.cycle(encoder.getMovement());
@@ -16,28 +17,34 @@ void MainController::execute() {
     }
 
     if((encoderButton.update() && encoderButton.pressed()) || resetInput.didRise()) {
-        euclideanLogicController.reset();
+        activeController->reset();
     }
 
     if(clockInput.didRise()) {
-        euclideanLogicController.clock();
+        activeController->clock();
     } else if (clockInput.didFall()) {
-        euclideanLogicController.clear();
+        activeController->clear();
     }
 
-    euclideanLogicController.execute();
+    activeController->execute();
 }
 
 void MainController::modeUpdate() {
     switch(mode.value) {
-        case Mode::ASYNCHRONOUS:
+        case Mode::EUCLID_ASYNCHRONOUS:
             euclideanLogicController.setMode(EuclideanLogicController::Mode::ASYNCHRONOUS);
+            activeController = &euclideanLogicController;
             break;
-        case Mode::SYNCHRONOUS:
+        case Mode::EUCLID_SYNCHRONOUS:
             euclideanLogicController.setMode(EuclideanLogicController::Mode::SYNCHRONOUS);
+            activeController = &euclideanLogicController;
             break;
-        case Mode::DUAL_SEQUENTIAL:
+        case Mode::EUCLID_DUAL_SEQUENTIAL:
             euclideanLogicController.setMode(EuclideanLogicController::Mode::DUAL_SEQUENTIAL);
+            activeController = &euclideanLogicController;
+            break;
+        case Mode::CLOCK_DIVIDER:
+            activeController = &clockDividerController;
             break;
         default:
             break;
