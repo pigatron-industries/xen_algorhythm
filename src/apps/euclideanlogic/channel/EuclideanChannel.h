@@ -1,9 +1,9 @@
-#ifndef EuclideanRhythmController_h
-#define EuclideanRhythmController_h
+#ifndef EuclideanChannel_h
+#define EuclideanChannel_h
 
 #include <eurorack.h>
 #include <inttypes.h>
-#include "../../generators/EuclideanRhythmGenerator.h"
+#include "modules/generators/EuclideanRhythmGenerator.h"
 
 class EuclideanChannel {
     public:
@@ -23,9 +23,9 @@ class EuclideanChannel {
         void debug();
 
     private:
-        LinearInput lengthInput;
-        LinearInput densityInput;
-        LinearInput offsetInput;
+        LinearInput<> lengthInput;
+        LinearInput<> densityInput;
+        LinearInput<> offsetInput;
 
         EuclideanRhythmGenerator generator;
 

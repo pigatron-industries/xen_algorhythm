@@ -2,9 +2,9 @@
 #define ClockDividerController_h
 
 #include <eurorack.h>
-#include "AbstractController.h"
+#include "Controller.h"
 
-class ClockDividerController : public AbstractController {
+class ClockDividerController : public Controller {
     public:
         virtual void init();
         virtual void execute();

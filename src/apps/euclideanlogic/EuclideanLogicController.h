@@ -2,12 +2,12 @@
 #define EuclideanChannelController_h
 
 #include <eurorack.h>
-#include "AbstractController.h"
+#include "Controller.h"
 #include "channel/EuclideanChannel.h"
-#include "../generators/SequentialGenerator.h"
-#include "../LogicGate.h"
+#include "modules/generators/SequentialGenerator.h"
+#include "modules/LogicGate.h"
 
-class EuclideanLogicController : public AbstractController {
+class EuclideanLogicController : public Controller {
     public:
         enum Mode {
             ASYNCHRONOUS,

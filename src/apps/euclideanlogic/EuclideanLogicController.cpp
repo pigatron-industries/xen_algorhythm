@@ -81,9 +81,9 @@ void EuclideanLogicController::debugReset() {
 
 void EuclideanLogicController::debugClock() {
     // for(int channel = 0; channel < CHANNELS; channel++) {
-    //     Serial.print(euclideanRhythmControllers[channel].getPosition());
+    //     Serial.print(euclideanChannels[channel].getPosition());
     //     Serial.print(":");
-    //     Serial.print(euclideanRhythmControllers[channel].getOutput());
+    //     Serial.print(euclideanChannels[channel].getOutput());
     //     Serial.print(" ");
     // }
     // Serial.println();

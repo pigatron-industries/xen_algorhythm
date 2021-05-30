@@ -3,9 +3,9 @@
 
 #include <eurorack.h>
 #include "hwconfig.h"
-#include "modules/controllers/AbstractController.h"
-#include "modules/controllers/EuclideanLogicController.h"
-#include "modules/controllers/ClockDividerController.h"
+#include "Controller.h"
+#include "apps/euclideanlogic/EuclideanLogicController.h"
+#include "apps/clockdivider/ClockDividerController.h"
 
 #define CHANNELS 4
 #define OUTPUTS 8
@@ -32,7 +32,7 @@ class MainController {
         TriggerInput resetInput = TriggerInput(RESET_PIN);
         TriggerInput clockInput = TriggerInput(CLOCK_PIN);
 
-        AbstractController* activeController;
+        Controller* activeController;
         EuclideanLogicController euclideanLogicController;
         ClockDividerController clockDividerController;
 

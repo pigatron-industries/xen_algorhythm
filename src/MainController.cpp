@@ -11,12 +11,19 @@ void MainController::init() {
 void MainController::execute() {
     activeController->execute();
 
+    encoderButton.update();
     if(encoder.update()) {
-        mode.cycle(encoder.getMovement());
-        modeUpdate();
+        if(encoderButton.held()) {
+            //TODO change controller when button held down
+            mode.cycle(encoder.getMovement());
+            modeUpdate();
+        } else {
+            mode.cycle(encoder.getMovement());
+            modeUpdate();
+        }
     }
 
-    if((encoderButton.update() && encoderButton.pressed()) || resetInput.didRise()) {
+    if(resetInput.didRise()) {
         activeController->reset();
     }
 

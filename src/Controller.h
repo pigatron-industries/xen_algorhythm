@@ -7,7 +7,7 @@
 #define CHANNELS 4
 #define OUTPUTS 8
 
-class AbstractController {
+class Controller {
     public:
         virtual void init() = 0;
         virtual void execute() = 0;
