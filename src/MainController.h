@@ -28,7 +28,7 @@ class MainController {
         CycleEnum<Mode> mode = CycleEnum<Mode>(Mode::EUCLID_ASYNCHRONOUS, Mode::CLOCK_DIVIDER);
 
         RotaryEncoder encoder = RotaryEncoder(ENCODER_PIN1, ENCODER_PIN2);
-        PushButton encoderButton = PushButton(ENCODER_BTN_PIN);
+        PushButton<> encoderButton = PushButton<>(DigitalInputPin(ENCODER_BTN_PIN));
         TriggerInput resetInput = TriggerInput(RESET_PIN);
         TriggerInput clockInput = TriggerInput(CLOCK_PIN);
 
