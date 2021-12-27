@@ -4,6 +4,7 @@
 #include <eurorack.h>
 #include "Controller.h"
 #include "channel/EuclideanChannel.h"
+#include "Hardware.h"
 #include "modules/generators/SequentialGenerator.h"
 #include "modules/LogicGate.h"
 
@@ -24,11 +25,14 @@ class EuclideanLogicController : public Controller {
         void setMode(Mode mode);
 
     private:
+
+        EuclideanChannel test = EuclideanChannel(Hardware::hw.length1, Hardware::hw.density1, Hardware::hw.offset1);
+
         EuclideanChannel euclideanChannels[4] = {
-            EuclideanChannel(A3, A7, A11),
-            EuclideanChannel(A2, A6, A10),
-            EuclideanChannel(A1, A5, A9),
-            EuclideanChannel(A0, A4, A8)
+            EuclideanChannel(Hardware::hw.length1, Hardware::hw.density1, Hardware::hw.offset1),
+            EuclideanChannel(Hardware::hw.length2, Hardware::hw.density2, Hardware::hw.offset2),
+            EuclideanChannel(Hardware::hw.length3, Hardware::hw.density3, Hardware::hw.offset3),
+            EuclideanChannel(Hardware::hw.length4, Hardware::hw.density4, Hardware::hw.offset4)
         };
 
         SequentialGenerator sequentialGenerator[2] = {

@@ -1,6 +1,6 @@
 #include "EuclideanChannel.h"
 
-EuclideanChannel::EuclideanChannel(uint8_t lengthPin, uint8_t offsetPin, uint8_t densityPin) : 
+EuclideanChannel::EuclideanChannel(AnalogInputPin<>& lengthPin, AnalogInputPin<>& offsetPin, AnalogInputPin<>& densityPin) : 
     lengthInput(lengthPin, -5, 5, 1, 17),
     densityInput(densityPin, -5, 5, 0, 1),
     offsetInput(offsetPin, -5, 5, 0, 1) {

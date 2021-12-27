@@ -7,7 +7,7 @@
 
 class EuclideanChannel {
     public:
-        EuclideanChannel(uint8_t lengthPin, uint8_t densityPin, uint8_t offsetPin);
+        EuclideanChannel(AnalogInputPin<>& lengthPin, AnalogInputPin<>& densityPin, AnalogInputPin<>& offsetPin);
         bool update();
         void clock();
         void reset();

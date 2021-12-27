@@ -4,8 +4,8 @@
 #include <eurorack.h>
 #include "hwconfig.h"
 #include "Controller.h"
-#include "apps/euclideanlogic/EuclideanLogicController.h"
-#include "apps/clockdivider/ClockDividerController.h"
+#include "controllers/euclideanlogic/EuclideanLogicController.h"
+#include "controllers/clockdivider/ClockDividerController.h"
 
 #define CHANNELS 4
 #define OUTPUTS 8
@@ -26,11 +26,6 @@ class MainController {
 
     private:
         CycleEnum<Mode> mode = CycleEnum<Mode>(Mode::EUCLID_ASYNCHRONOUS, Mode::CLOCK_DIVIDER);
-
-        RotaryEncoder encoder = RotaryEncoder(ENCODER_PIN1, ENCODER_PIN2);
-        PushButton<> encoderButton = PushButton<>(DigitalInputPin(ENCODER_BTN_PIN));
-        TriggerInput resetInput = TriggerInput(RESET_PIN);
-        TriggerInput clockInput = TriggerInput(CLOCK_PIN);
 
         Controller* activeController;
         EuclideanLogicController euclideanLogicController;

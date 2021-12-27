@@ -1,4 +1,5 @@
 #include "MainController.h"
+#include "Hardware.h"
 
 MainController::MainController() {
     activeController = &euclideanLogicController;
@@ -11,25 +12,25 @@ void MainController::init() {
 void MainController::execute() {
     activeController->execute();
 
-    encoderButton.update();
-    if(encoder.update()) {
-        if(encoderButton.held()) {
+    Hardware::hw.encoderButton.update();
+    if(Hardware::hw.encoder.update()) {
+        if(Hardware::hw.encoderButton.held()) {
             //TODO change controller when button held down
-            mode.cycle(encoder.getMovement());
+            mode.cycle(Hardware::hw.encoder.getMovement());
             modeUpdate();
         } else {
-            mode.cycle(encoder.getMovement());
+            mode.cycle(Hardware::hw.encoder.getMovement());
             modeUpdate();
         }
     }
 
-    if(resetInput.didRise()) {
+    if(Hardware::hw.resetInput.didRise()) {
         activeController->reset();
     }
 
-    if(clockInput.didRise()) {
+    if(Hardware::hw.clockInput.didRise()) {
         activeController->clock();
-    } else if (clockInput.didFall()) {
+    } else if (Hardware::hw.clockInput.didFall()) {
         activeController->clear();
     }
 
