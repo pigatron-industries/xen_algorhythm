@@ -2,22 +2,37 @@
 #define Config_h
 
 #include <inttypes.h>
+#include <EEPROM.h>
 
-class Mode {
+template <class T>
+class ConfigField {
     public:
-        uint8_t controllerIndex;
-        uint8_t controllerMode;
+        int address = 0;
+        int size = 0;
+        T data;
 };
 
-class Config {
-
+class ConfigRepo {
     public:
-        static Config data;
-        Mode mode;
+        static ConfigRepo repo;
 
-        static void load();
-        static void saveMode();
-    
+        template<class T> 
+        void load(ConfigField<T> &field) {
+            if(field.size == 0) {
+                field.address = nextAddress;
+                field.size = sizeof(T);
+            }
+
+            EEPROM.get(field.address, field.data);
+        }
+
+        template<class T> 
+        void save(ConfigField<T> &field) {
+            EEPROM.put(field.address, field.data);
+        }
+
+    private:
+        int nextAddress = 0;
 };
 
 #endif
