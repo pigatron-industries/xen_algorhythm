@@ -9,13 +9,18 @@
 
 class Controller {
     public:
+        Controller(int lastMode = 0) : mode(0, lastMode) {}
         virtual void init() = 0;
-        virtual void execute() = 0;
+        virtual void update() = 0;
         virtual void clock() = 0;
         virtual void clear() = 0;
         virtual void reset() = 0;
 
+        int cycleMode(int amount) { mode.cycle(amount); return mode.value; }
+        void setMode(int value) { mode.setValue(value); }
+
     protected:
+        CycleEnum<int> mode;
         MultiplexGateOutput gateOutputs = MultiplexGateOutput(OUT_DATA_PIN, OUT_LATCH_PIN, OUT_CLOCK_PIN, OUTPUTS);
 };
 

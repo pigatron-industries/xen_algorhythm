@@ -45,3 +45,6 @@ Thumbs.db
 .clang_complete
 .gcc-flags.json
 .vscode
+
+# Generated includes
+apps.h 

@@ -4,7 +4,7 @@ void ClockDividerController::init() {
     counter = 0;
 }
 
-void ClockDividerController::execute() {
+void ClockDividerController::update() {
 }
 
 void ClockDividerController::clock() {

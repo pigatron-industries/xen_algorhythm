@@ -1,34 +1,27 @@
 #include "EuclideanLogicController.h"
 
 void EuclideanLogicController::init() { 
+    reset();
 }
 
-void EuclideanLogicController::execute() {
+void EuclideanLogicController::update() {
     bool changed = false;
     for(int channel = 0; channel < CHANNELS; channel++) {
         changed |= euclideanChannels[channel].update();
 
-        if(mode == Mode::SYNCHRONOUS) {
+        if(mode.value == Mode::SYNCHRONOUS) {
             euclideanChannels[channel].setFrameLength(euclideanChannels[0].getLength());
         }
     }
 
-    if(mode == Mode::DUAL_SEQUENTIAL) {
+    if(mode.value == Mode::DUAL_SEQUENTIAL) {
         sequentialGenerator[0].update();
         sequentialGenerator[1].update();
     }
 }
 
-void EuclideanLogicController::setMode(Mode mode) {
-    this->mode = mode;
-    for(int channel = 0; channel < CHANNELS; channel++) {
-        euclideanChannels[channel].setFrameMode(mode == Mode::SYNCHRONOUS ? EuclideanRhythmGenerator::FrameMode::FRAME_SINGLE : 
-                                                                            EuclideanRhythmGenerator::FrameMode::FRAME_NONE);
-    }
-}
-
 void EuclideanLogicController::clock() {
-    switch(mode) {
+    switch(mode.value) {
         case Mode::ASYNCHRONOUS:
         case Mode::SYNCHRONOUS:
             euclideanChannels[0].clock();
@@ -73,7 +66,7 @@ void EuclideanLogicController::clear() {
 
 void EuclideanLogicController::debugReset() {
     Serial.print("Mode: ");
-    Serial.println(mode);
+    Serial.println(mode.value);
     for(int channel = 0; channel < CHANNELS; channel++) {
         euclideanChannels[channel].debug();
     }

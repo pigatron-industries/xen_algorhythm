@@ -34,8 +34,13 @@ class Hardware {
         AnalogInput(offset3, A9)
         AnalogInput(offset4, A8)
 
-        TriggerInput resetInput = TriggerInput(RESET_PIN);
-        TriggerInput clockInput = TriggerInput(CLOCK_PIN);
+        #if defined(OCTASOURCE_MKI)
+        #endif
+
+        #if defined(OCTASOURCE_MKI)
+            TriggerInput resetInput = TriggerInput(RESET_PIN);
+            TriggerInput clockInput = TriggerInput(CLOCK_PIN);
+        #endif
 
 };
 

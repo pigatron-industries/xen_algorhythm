@@ -12,6 +12,7 @@
 
 class MainController {
     public:
+        static MainController instance;
 
         enum Mode {
             EUCLID_ASYNCHRONOUS,
@@ -22,16 +23,19 @@ class MainController {
 
         MainController();
         void init();
-        void execute();
+        void update();
+
+        void registerController(Controller& controller);
 
     private:
         CycleEnum<Mode> mode = CycleEnum<Mode>(Mode::EUCLID_ASYNCHRONOUS, Mode::CLOCK_DIVIDER);
 
-        Controller* activeController;
+        ControllerList<Controller, 2> controllers;
+
         EuclideanLogicController euclideanLogicController;
         ClockDividerController clockDividerController;
 
-        void modeUpdate();
+        void controllerInit();
 };
 
 #endif

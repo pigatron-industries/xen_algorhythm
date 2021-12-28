@@ -7,7 +7,7 @@
 class ClockDividerController : public Controller {
     public:
         virtual void init();
-        virtual void execute();
+        virtual void update();
         virtual void clock();
         virtual void reset();
         virtual void clear();

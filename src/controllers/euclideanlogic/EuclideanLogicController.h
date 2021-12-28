@@ -16,8 +16,10 @@ class EuclideanLogicController : public Controller {
             DUAL_SEQUENTIAL
         };
 
+        EuclideanLogicController() : Controller(Mode::DUAL_SEQUENTIAL) {}
+
         virtual void init();
-        virtual void execute();
+        virtual void update();
         virtual void clock();
         virtual void reset();
         virtual void clear();
@@ -46,8 +48,6 @@ class EuclideanLogicController : public Controller {
             LogicGate(LogicGate::GateType::AND, euclideanChannels[2].getRhythm(), euclideanChannels[1].getRhythm()),
             LogicGate(LogicGate::GateType::AND, euclideanChannels[3].getRhythm(), euclideanChannels[2].getRhythm())
         };
-
-        Mode mode;
 
         void debugReset();
         void debugClock();

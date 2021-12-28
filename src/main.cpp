@@ -2,10 +2,7 @@
 
 #include "hwconfig.h"
 #include "MainController.h"
-
-// hardware
-
-MainController mainController = MainController();
+#include "apps.h"
 
 
 void setup() {
@@ -15,9 +12,10 @@ void setup() {
     Serial.println("*     Pigatron Industries Euclidean Logic    *");
     Serial.println("==============================================");
     Serial.println();
-    mainController.init();
+    registerApps();
+    MainController::instance.init();
 }
 
 void loop() {
-    mainController.execute();
+    MainController::instance.update();
 }
