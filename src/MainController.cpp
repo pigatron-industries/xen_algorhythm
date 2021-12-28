@@ -1,6 +1,5 @@
 #include "MainController.h"
 #include "Hardware.h"
-#include "Config.h"
 
 MainController MainController::instance;
 
