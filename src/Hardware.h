@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <eurorack.h>
 #include <eurorack_is32fl3738.h>
+#include <eurorack_hc595.h>
 #include "hwconfig.h"
 
 
@@ -35,11 +36,23 @@ class Hardware {
         AnalogInput(offset4, A8)
 
         #if defined(OCTASOURCE_MKI)
+
         #endif
 
         #if defined(OCTASOURCE_MKI)
             TriggerInput resetInput = TriggerInput(RESET_PIN);
             TriggerInput clockInput = TriggerInput(CLOCK_PIN);
+            HC595Device hc595Device = HC595Device(OUT_CLOCK_PIN, OUT_LATCH_PIN, OUT_DATA_PIN);
+            DigitalOutputPin<HC595Device>* gateOutputs[8] = {
+                &hc595Device.pins[0],
+                &hc595Device.pins[1],
+                &hc595Device.pins[2],
+                &hc595Device.pins[3],
+                &hc595Device.pins[4],
+                &hc595Device.pins[5],
+                &hc595Device.pins[6],
+                &hc595Device.pins[7]
+            }; 
         #endif
 
 };

@@ -1,7 +1,17 @@
 #include "ClockDividerController.h"
+#include "Hardware.h"
 
 void ClockDividerController::init() { 
+    Serial.println("Clock Divider");
     counter = 0;
+    clockDividers[0].setDivisor(1);
+    clockDividers[1].setDivisor(6);
+    clockDividers[2].setDivisor(8);
+    clockDividers[3].setDivisor(12);
+    clockDividers[4].setDivisor(24);
+    clockDividers[5].setDivisor(32);
+    clockDividers[6].setDivisor(48);
+    clockDividers[7].setDivisor(96);
 }
 
 void ClockDividerController::update() {
@@ -13,17 +23,11 @@ void ClockDividerController::clock() {
         counter = 0;
     }
 
-    // if(_mode == CLOCK_MODE_PPQN24) {
-    gateOutputs.setValue(0, counter % 1 == 0);
-    gateOutputs.setValue(1, counter % 6 == 0);
-    gateOutputs.setValue(2, counter % 8 == 0);
-    gateOutputs.setValue(3, counter % 12 == 0);
-    gateOutputs.setValue(4, counter % 24 == 0);
-    gateOutputs.setValue(5, counter % 32 == 0);
-    gateOutputs.setValue(6, counter % 48 == 0);
-    gateOutputs.setValue(7, counter % 96 == 0);
+    for(int i = 0; i < 8; i++) {
+        Hardware::hw.gateOutputs[i]->digitalWrite(clockDividers[i].tick());
+    }
 
-    gateOutputs.sendData();
+    Hardware::hw.hc595Device.send();
 }
 
 void ClockDividerController::reset() {
@@ -31,8 +35,8 @@ void ClockDividerController::reset() {
 }
 
 void ClockDividerController::clear() {
-    for(int channel = 0; channel < CHANNELS+4; channel++) {
-        gateOutputs.setValue(channel, false);
+    for(int i = 0; i < 8; i++) {
+        Hardware::hw.gateOutputs[i]->digitalWrite(0);
     }
-    gateOutputs.sendData();
+    Hardware::hw.hc595Device.send();
 }

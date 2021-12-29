@@ -1,7 +1,7 @@
 #ifndef ClockDividerController_h
 #define ClockDividerController_h
 
-#include <eurorack.h>
+#include <eurorack_dsp.h>
 #include "Controller.h"
 
 class ClockDividerController : public Controller {
@@ -14,6 +14,7 @@ class ClockDividerController : public Controller {
 
     private:
         int counter;
+        ClockDivider clockDividers[8];
 };
 
 #endif

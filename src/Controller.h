@@ -21,7 +21,6 @@ class Controller {
 
     protected:
         CycleEnum<int> mode;
-        MultiplexGateOutput gateOutputs = MultiplexGateOutput(OUT_DATA_PIN, OUT_LATCH_PIN, OUT_CLOCK_PIN, OUTPUTS);
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include "EuclideanLogicController.h"
 
 void EuclideanLogicController::init() { 
+    Serial.println("Euclidean Logic");
     reset();
 }
 
@@ -28,24 +29,24 @@ void EuclideanLogicController::clock() {
             euclideanChannels[1].clock();
             euclideanChannels[2].clock();
             euclideanChannels[3].clock();
-            gateOutputs.setValue(0, euclideanChannels[0].getOutput());
-            gateOutputs.setValue(1, euclideanChannels[1].getOutput());
-            gateOutputs.setValue(2, euclideanChannels[2].getOutput());
-            gateOutputs.setValue(3, euclideanChannels[3].getOutput());
-            gateOutputs.setValue(4, logicGates[0].getOutput());
-            gateOutputs.setValue(5, logicGates[1].getOutput());
-            gateOutputs.setValue(6, logicGates[2].getOutput());
-            gateOutputs.setValue(7, logicGates[3].getOutput());
+            Hardware::hw.gateOutputs[0]->digitalWrite(euclideanChannels[0].getOutput());
+            Hardware::hw.gateOutputs[1]->digitalWrite(euclideanChannels[1].getOutput());
+            Hardware::hw.gateOutputs[2]->digitalWrite(euclideanChannels[2].getOutput());
+            Hardware::hw.gateOutputs[3]->digitalWrite(euclideanChannels[3].getOutput());
+            Hardware::hw.gateOutputs[4]->digitalWrite(logicGates[0].getOutput());
+            Hardware::hw.gateOutputs[5]->digitalWrite(logicGates[1].getOutput());
+            Hardware::hw.gateOutputs[6]->digitalWrite(logicGates[2].getOutput());
+            Hardware::hw.gateOutputs[7]->digitalWrite(logicGates[3].getOutput());
             break;
         case Mode::DUAL_SEQUENTIAL:
             sequentialGenerator[0].clock();
             sequentialGenerator[1].clock();
-            gateOutputs.setValue(0, sequentialGenerator[0].getOutput());
-            gateOutputs.setValue(2, sequentialGenerator[1].getOutput());
+            Hardware::hw.gateOutputs[0]->digitalWrite(sequentialGenerator[0].getOutput());
+            Hardware::hw.gateOutputs[2]->digitalWrite(sequentialGenerator[1].getOutput());
             break;
     }
 
-    gateOutputs.sendData();
+    Hardware::hw.hc595Device.send();
     debugClock();
 }
 
@@ -58,10 +59,10 @@ void EuclideanLogicController::reset() {
 }
 
 void EuclideanLogicController::clear() {
-    for(int channel = 0; channel < CHANNELS+4; channel++) {
-        gateOutputs.setValue(channel, false);
+    for(int i = 0; i < 8; i++) {
+        Hardware::hw.gateOutputs[i]->digitalWrite(0);
     }
-    gateOutputs.sendData();
+    Hardware::hw.hc595Device.send();
 }
 
 void EuclideanLogicController::debugReset() {
