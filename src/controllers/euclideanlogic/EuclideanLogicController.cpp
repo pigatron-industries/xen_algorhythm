@@ -46,7 +46,6 @@ void EuclideanLogicController::clock() {
             break;
     }
 
-    Hardware::hw.hc595Device.send();
     debugClock();
 }
 
@@ -62,7 +61,6 @@ void EuclideanLogicController::clear() {
     for(int i = 0; i < 8; i++) {
         Hardware::hw.gateOutputs[i]->digitalWrite(0);
     }
-    Hardware::hw.hc595Device.send();
 }
 
 void EuclideanLogicController::debugReset() {

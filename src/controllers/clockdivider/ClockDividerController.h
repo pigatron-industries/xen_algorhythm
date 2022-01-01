@@ -3,6 +3,7 @@
 
 #include <eurorack_dsp.h>
 #include "Controller.h"
+#include "Hardware.h"
 
 class ClockDividerController : public Controller {
     public:
@@ -13,8 +14,7 @@ class ClockDividerController : public Controller {
         virtual void clear();
 
     private:
-        int counter;
-        ClockDivider clockDividers[8];
+        ClockDivider clockDividers[GATE_OUTPUTS];
 };
 
 #endif

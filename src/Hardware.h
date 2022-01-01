@@ -3,8 +3,12 @@
 
 #include <Arduino.h>
 #include <eurorack.h>
-#include <eurorack_is32fl3738.h>
-#include <eurorack_hc595.h>
+#if defined(ALGORHYTHM_MKII)
+    #include <eurorack_mcp23s17.h>
+#endif
+//#if defined(ALGORHYTHM_MKI)
+    #include <eurorack_hc595.h>
+//#endif
 #include "hwconfig.h"
 
 
@@ -12,6 +16,7 @@ class Hardware {
     public:
         static Hardware hw;
         void init();
+        void updateOutputs();
 
         // Native pins
         DigitalInput(encoderBtnPin, ENCODER_BTN_PIN);
@@ -35,11 +40,33 @@ class Hardware {
         AnalogInput(offset3, A9)
         AnalogInput(offset4, A8)
 
-        #if defined(OCTASOURCE_MKI)
-
+        #if defined(ALGORHYTHM_MKII)
+            #define GATE_OUTPUTS 12
+            MCP23S17Device mcp23s17Device = MCP23S17Device(GPIO_CS_PIN, GPIO_ADDRESS);
+            DigitalInputPin<MCP23S17Device>& clockInputPin = mcp23s17Device.pins[4];
+            DigitalInputPin<MCP23S17Device>& resetInputPin = mcp23s17Device.pins[5];
+            DigitalInputPin<MCP23S17Device>& rotateInputPin = mcp23s17Device.pins[6];
+            DigitalInputPin<MCP23S17Device>& chnageInputPin = mcp23s17Device.pins[7];
+            GateInput<MCP23S17Device> clockInput = GateInput<MCP23S17Device>(clockInputPin);
+            GateInput<MCP23S17Device> resetInput = GateInput<MCP23S17Device>(resetInputPin);
+            DigitalOutputPin<MCP23S17Device>* gateOutputs[12] = {
+                &mcp23s17Device.pins[8],
+                &mcp23s17Device.pins[9],
+                &mcp23s17Device.pins[10],
+                &mcp23s17Device.pins[11],
+                &mcp23s17Device.pins[12],
+                &mcp23s17Device.pins[13],
+                &mcp23s17Device.pins[14],
+                &mcp23s17Device.pins[15],
+                &mcp23s17Device.pins[0],
+                &mcp23s17Device.pins[1],
+                &mcp23s17Device.pins[2],
+                &mcp23s17Device.pins[3]
+            }; 
         #endif
 
-        #if defined(OCTASOURCE_MKI)
+        #if defined(ALGORHYTHM_MKI)
+            #define GATE_OUTPUTS 8
             TriggerInput resetInput = TriggerInput(RESET_PIN);
             TriggerInput clockInput = TriggerInput(CLOCK_PIN);
             HC595Device hc595Device = HC595Device(OUT_CLOCK_PIN, OUT_LATCH_PIN, OUT_DATA_PIN);

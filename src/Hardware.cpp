@@ -3,10 +3,22 @@
 Hardware Hardware::hw = Hardware();
 
 void Hardware::init() {
-    analogReadResolution(12);
+    for(int i = 0; i < GATE_OUTPUTS; i++) {
+        gateOutputs[i]->init();
+    }
 
-    // Wire.setSDA(SDA_PIN);
-    // Wire.setSCL(SCL_PIN);
-    // Wire.setClock(I2C_SPEED);
-    // Wire.begin();
+    for(int i = 0; i < GATE_OUTPUTS; i++) {
+        gateOutputs[i]->digitalWrite(false);
+    }
+
+    mcp23s17Device.gpioPortUpdate(); // TODO move to send() function
+}
+
+void Hardware::updateOutputs() {
+    #if defined(ALGORHYTHM_MKII)
+        mcp23s17Device.gpioPortUpdate(); // TODO move to send() function
+    #endif
+    #if defined(ALGORHYTHM_MKI)
+        Hardware::hw.hc595Device.send();
+    #endif
 }
