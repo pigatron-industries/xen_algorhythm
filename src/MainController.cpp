@@ -16,21 +16,5 @@ void MainController::controllerInit() {
 }
 
 void MainController::update() {
-    Hardware::hw.resetInput.update();
-    Hardware::hw.clockInput.update();
-
-    if(Hardware::hw.resetInput.rose()) {
-        controllers.getActiveController()->reset();
-        Hardware::hw.updateOutputs();
-    }
-
-    if(Hardware::hw.clockInput.rose()) {
-        controllers.getActiveController()->clock();
-        Hardware::hw.updateOutputs();
-    } else if (Hardware::hw.clockInput.fell()) {
-        controllers.getActiveController()->clear();
-        Hardware::hw.updateOutputs();
-    }
-
     AbstractMainController::update();
 }

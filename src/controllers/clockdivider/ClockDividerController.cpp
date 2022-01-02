@@ -22,6 +22,7 @@ void ClockDividerController::init() {
 }
 
 void ClockDividerController::update() {
+    Controller::update();
 }
 
 void ClockDividerController::clock() {

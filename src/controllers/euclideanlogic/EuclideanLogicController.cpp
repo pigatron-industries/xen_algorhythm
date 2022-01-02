@@ -6,6 +6,8 @@ void EuclideanLogicController::init() {
 }
 
 void EuclideanLogicController::update() {
+    Controller::update();
+
     bool changed = false;
     for(int channel = 0; channel < CHANNELS; channel++) {
         changed |= euclideanChannels[channel].update();

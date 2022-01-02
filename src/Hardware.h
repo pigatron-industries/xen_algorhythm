@@ -46,9 +46,11 @@ class Hardware {
             DigitalInputPin<MCP23S17Device>& clockInputPin = mcp23s17Device.pins[4];
             DigitalInputPin<MCP23S17Device>& resetInputPin = mcp23s17Device.pins[5];
             DigitalInputPin<MCP23S17Device>& rotateInputPin = mcp23s17Device.pins[6];
-            DigitalInputPin<MCP23S17Device>& chnageInputPin = mcp23s17Device.pins[7];
-            GateInput<MCP23S17Device> clockInput = GateInput<MCP23S17Device>(clockInputPin);
-            GateInput<MCP23S17Device> resetInput = GateInput<MCP23S17Device>(resetInputPin);
+            DigitalInputPin<MCP23S17Device>& changeInputPin = mcp23s17Device.pins[7];
+            GateInput<MCP23S17Device> clockInput = GateInput<MCP23S17Device>(clockInputPin, false);
+            GateInput<MCP23S17Device> resetInput = GateInput<MCP23S17Device>(resetInputPin, false);
+            GateInput<MCP23S17Device> rotateInput = GateInput<MCP23S17Device>(rotateInputPin, false);
+            GateInput<MCP23S17Device> changeInput = GateInput<MCP23S17Device>(changeInputPin, false);
             DigitalOutputPin<MCP23S17Device>* gateOutputs[12] = {
                 &mcp23s17Device.pins[8],
                 &mcp23s17Device.pins[9],
