@@ -53,16 +53,16 @@ class Hardware {
             GateInput<MCP23S17Device> changeInput = GateInput<MCP23S17Device>(changeInputPin, false);
             DigitalOutputPin<MCP23S17Device>* gateOutputs[12] = {
                 &mcp23s17Device.pins[8],
-                &mcp23s17Device.pins[9],
-                &mcp23s17Device.pins[10],
                 &mcp23s17Device.pins[11],
-                &mcp23s17Device.pins[12],
-                &mcp23s17Device.pins[13],
                 &mcp23s17Device.pins[14],
-                &mcp23s17Device.pins[15],
-                &mcp23s17Device.pins[0],
                 &mcp23s17Device.pins[1],
+                &mcp23s17Device.pins[9],
+                &mcp23s17Device.pins[12],
+                &mcp23s17Device.pins[15],
                 &mcp23s17Device.pins[2],
+                &mcp23s17Device.pins[10],
+                &mcp23s17Device.pins[13],
+                &mcp23s17Device.pins[0],
                 &mcp23s17Device.pins[3]
             }; 
         #endif

@@ -6,12 +6,12 @@ void ClockDividerController::init() {
 
     int i = 0;
     clockDividers[i++].setDivisor(1);
-    if(GATE_OUTPUTS == 12) {
+    #if GATE_OUTPUTS == 12
         clockDividers[i++].setDivisor(2);
         clockDividers[i++].setDivisor(3);
         clockDividers[i++].setDivisor(4);
         clockDividers[i++].setDivisor(5);
-    }
+    #endif
     clockDividers[i++].setDivisor(6);
     clockDividers[i++].setDivisor(8);
     clockDividers[i++].setDivisor(12);
