@@ -12,7 +12,6 @@ void setup() {
     Serial.println("*     Pigatron Industries Euclidean Logic    *");
     Serial.println("==============================================");
     Serial.println();
-    registerApps();
     MainController::instance.init();
 }
 
