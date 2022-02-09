@@ -3,7 +3,7 @@
 
 MainController MainController::instance;
 
-MainController::MainController() : AbstractMainController(Hardware::hw.encoder, Hardware::hw.encoderButton) {
+MainController::MainController() : AbstractMainController(Hardware::hw.encoder) {
 }
 
 void MainController::init() {

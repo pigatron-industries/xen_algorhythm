@@ -1,6 +1,8 @@
 #include "DecoderController.h"
 #include "Hardware.h"
 
+#if defined(ALGORHYTHM_MKII)
+
 void DecoderController::init() { 
     Serial.println("Decoder");
 }
@@ -50,3 +52,5 @@ void DecoderController::decode() {
         Hardware::hw.gateOutputs[11]->digitalWrite(Hardware::hw.gateOutputs[3]->getDigitalValue() || Hardware::hw.gateOutputs[7]->getDigitalValue());
     #endif
 }
+
+#endif

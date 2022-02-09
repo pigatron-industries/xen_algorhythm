@@ -26,8 +26,11 @@ class Controller {
 inline void Controller::update() {
     Hardware::hw.resetInput.update();
     Hardware::hw.clockInput.update();
-    Hardware::hw.rotateInput.update();
-    Hardware::hw.changeInput.update();
+
+    #if defined(ALGORHYTHM_MKII)
+        Hardware::hw.rotateInput.update();
+        Hardware::hw.changeInput.update();
+    #endif
 
     if(Hardware::hw.resetInput.rose()) {
         reset();

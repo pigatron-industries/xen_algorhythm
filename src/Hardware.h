@@ -18,12 +18,8 @@ class Hardware {
         void init();
         void updateOutputs();
 
-        // Native pins
-        DigitalInput(encoderBtnPin, ENCODER_BTN_PIN);
-
         // Direct connections
-        RotaryEncoder encoder = RotaryEncoder(ENCODER_PIN1, ENCODER_PIN2);
-        PushButton<> encoderButton = PushButton<>(encoderBtnPin);
+        RotaryEncoderButton encoder = RotaryEncoderButton(ENCODER_PIN1, ENCODER_PIN2, ENCODER_BTN_PIN);
 
         AnalogInput(length1, A3)
         AnalogInput(length2, A2)

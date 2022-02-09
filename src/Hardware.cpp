@@ -11,7 +11,9 @@ void Hardware::init() {
         gateOutputs[i]->digitalWrite(false);
     }
 
-    mcp23s17Device.gpioPortUpdate(); // TODO move to send() function
+    #if defined(ALGORHYTHM_MKII)
+        mcp23s17Device.gpioPortUpdate(); // TODO move to send() function
+    #endif
 }
 
 void Hardware::updateOutputs() {
