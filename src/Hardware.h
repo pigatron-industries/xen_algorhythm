@@ -6,11 +6,12 @@
 #if defined(ALGORHYTHM_MKII)
     #include <eurorack_mcp23s17.h>
 #endif
-//#if defined(ALGORHYTHM_MKI)
+#if defined(ALGORHYTHM_MKI)
     #include <eurorack_hc595.h>
-//#endif
+#endif
 #include "hwconfig.h"
 
+using namespace eurorack;
 
 class Hardware {
     public:
