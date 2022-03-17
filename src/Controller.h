@@ -24,6 +24,10 @@ class Controller {
 };
 
 inline void Controller::update() {
+    #if defined(ALGORHYTHM_MKII)
+        Hardware::hw.mcp23s17Device.receive();
+    #endif
+
     Hardware::hw.resetInput.update();
     Hardware::hw.clockInput.update();
 
