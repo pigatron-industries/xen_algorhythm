@@ -40,7 +40,7 @@ bool EuclideanRhythmGenerator::setFrameLength(uint8_t frameLength) {
 bool EuclideanRhythmGenerator::setFrameMode(FrameMode frameMode) {
     if(this->frameMode != frameMode) {
         this->frameMode = frameMode;
-        generate();
+        //generate();
         return true;
     }
     return false;

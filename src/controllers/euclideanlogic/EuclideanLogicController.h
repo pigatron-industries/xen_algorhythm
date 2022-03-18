@@ -13,6 +13,7 @@ class EuclideanLogicController : public Controller {
         enum Mode {
             ASYNCHRONOUS,
             SYNCHRONOUS,
+            SYNCHRONOUS_LIMITED,
             DUAL_SEQUENTIAL
         };
 
@@ -28,14 +29,21 @@ class EuclideanLogicController : public Controller {
 
     private:
 
-        EuclideanChannel test = EuclideanChannel(Hardware::hw.length1, Hardware::hw.density1, Hardware::hw.offset1);
-
-        EuclideanChannel euclideanChannels[4] = {
+        EuclideanChannel asyncEuclideanChannels[4] = {
             EuclideanChannel(Hardware::hw.length1, Hardware::hw.density1, Hardware::hw.offset1),
             EuclideanChannel(Hardware::hw.length2, Hardware::hw.density2, Hardware::hw.offset2),
             EuclideanChannel(Hardware::hw.length3, Hardware::hw.density3, Hardware::hw.offset3),
             EuclideanChannel(Hardware::hw.length4, Hardware::hw.density4, Hardware::hw.offset4)
         };
+
+        EuclideanChannel syncEuclideanChannels[4] = {
+            EuclideanChannel(Hardware::hw.length1, Hardware::hw.density1, Hardware::hw.offset1),
+            EuclideanChannel(Hardware::hw.length1, Hardware::hw.density2, Hardware::hw.offset2),
+            EuclideanChannel(Hardware::hw.length1, Hardware::hw.density3, Hardware::hw.offset3),
+            EuclideanChannel(Hardware::hw.length1, Hardware::hw.density4, Hardware::hw.offset4)
+        };
+
+        EuclideanChannel* euclideanChannels = asyncEuclideanChannels;
 
         SequentialGenerator sequentialGenerator[2] = {
             SequentialGenerator(euclideanChannels[0].getRhythm(), euclideanChannels[1].getRhythm()),
@@ -49,7 +57,8 @@ class EuclideanLogicController : public Controller {
             LogicGate(LogicGate::GateType::AND, euclideanChannels[3].getRhythm(), euclideanChannels[2].getRhythm())
         };
 
-        void debugReset();
+        void setFrameMode(EuclideanRhythmGenerator::FrameMode frameMode);
+        void debug();
         void debugClock();
 };
 

@@ -13,16 +13,13 @@ bool EuclideanChannel::update() {
             updateDensity();
             updateOffset();
             change = true;
-            debug();
         }
     }
     if(densityInput.update()) {
-        updateDensity();
-        change = true;
+        change |= updateDensity();
     }
     if(offsetInput.update()) {
-        updateOffset();
-        change = true;
+        change |= updateOffset();
     }
     return change;
 }
@@ -30,7 +27,6 @@ bool EuclideanChannel::update() {
 bool EuclideanChannel::updateDensity() {
     uint8_t density = (generator.getLength()+1) * densityInput.getValue();
     if(generator.setDensity(density)) {
-        debug();
         return true;
     }
     return false;
@@ -39,7 +35,6 @@ bool EuclideanChannel::updateDensity() {
 bool EuclideanChannel::updateOffset() {
     uint8_t offset = generator.getFrameLength() * offsetInput.getValue();
     if(generator.setOffset(offset)) {
-        debug();
         return true;
     }
     return false;

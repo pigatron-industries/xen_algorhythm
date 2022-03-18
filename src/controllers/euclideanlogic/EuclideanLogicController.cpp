@@ -2,7 +2,25 @@
 
 void EuclideanLogicController::init() { 
     Serial.println("Euclidean Logic");
+    Serial.print("Mode: ");
+    Serial.println(mode.value);
+    switch(mode.value) {
+        case Mode::ASYNCHRONOUS:
+        case Mode::DUAL_SEQUENTIAL:
+            euclideanChannels = asyncEuclideanChannels;
+            setFrameMode(EuclideanRhythmGenerator::FrameMode::FRAME_NONE);
+            break;
+        case Mode::SYNCHRONOUS:
+            euclideanChannels = asyncEuclideanChannels;
+            setFrameMode(EuclideanRhythmGenerator::FrameMode::FRAME_SINGLE);
+            break;
+        case Mode::SYNCHRONOUS_LIMITED:
+            euclideanChannels = syncEuclideanChannels;
+            setFrameMode(EuclideanRhythmGenerator::FrameMode::FRAME_NONE);
+            break;
+    }
     reset();
+    debug();
 }
 
 void EuclideanLogicController::update() {
@@ -11,8 +29,7 @@ void EuclideanLogicController::update() {
     bool changed = false;
     for(int channel = 0; channel < CHANNELS; channel++) {
         changed |= euclideanChannels[channel].update();
-
-        if(mode.value == Mode::SYNCHRONOUS) {
+        if(mode.value == Mode::SYNCHRONOUS || mode.value == Mode::SYNCHRONOUS_LIMITED) {
             euclideanChannels[channel].setFrameLength(euclideanChannels[0].getLength());
         }
     }
@@ -20,6 +37,21 @@ void EuclideanLogicController::update() {
     if(mode.value == Mode::DUAL_SEQUENTIAL) {
         sequentialGenerator[0].update();
         sequentialGenerator[1].update();
+    }
+
+    if(changed) {
+        Serial.println("===========");
+        for(int channel = 0; channel < CHANNELS; channel++) {
+            Serial.print("Channel ");
+            Serial.println(channel);
+            euclideanChannels[channel].debug();
+        }
+    }
+}
+
+void EuclideanLogicController::setFrameMode(EuclideanRhythmGenerator::FrameMode frameMode) {
+    for(int channel = 0; channel < CHANNELS; channel++) {
+        euclideanChannels[channel].setFrameMode(frameMode);
     }
 }
 
@@ -56,7 +88,6 @@ void EuclideanLogicController::reset() {
         euclideanChannels[channel].reset();
     }
     clear();
-    debugReset();
 }
 
 void EuclideanLogicController::clear() {
@@ -65,10 +96,11 @@ void EuclideanLogicController::clear() {
     }
 }
 
-void EuclideanLogicController::debugReset() {
-    Serial.print("Mode: ");
-    Serial.println(mode.value);
+void EuclideanLogicController::debug() {
+    Serial.println("===========");
     for(int channel = 0; channel < CHANNELS; channel++) {
+        Serial.print("Channel ");
+        Serial.println(channel);
         euclideanChannels[channel].debug();
     }
 }
