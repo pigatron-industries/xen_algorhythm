@@ -66,8 +66,10 @@ class Hardware {
 
         #if defined(ALGORHYTHM_MKI)
             #define GATE_OUTPUTS 8
-            TriggerInput resetInput = TriggerInput(RESET_PIN);
-            TriggerInput clockInput = TriggerInput(CLOCK_PIN);
+            DigitalInput(clockInputPin, CLOCK_PIN)
+            DigitalInput(resetInputPin, RESET_PIN)
+            TriggerInput<> resetInput = TriggerInput<>(resetInputPin, true, RESET_PIN);
+            TriggerInput<> clockInput = TriggerInput<>(clockInputPin, true, CLOCK_PIN);
             HC595Device hc595Device = HC595Device(OUT_CLOCK_PIN, OUT_LATCH_PIN, OUT_DATA_PIN);
             DigitalOutputPin<HC595Device>* gateOutputs[8] = {
                 &hc595Device.pins[0],
